@@ -25,6 +25,7 @@
     @media (max-width:860px){#trabajos-left{height:auto!important;min-height:0!important;top:52px!important;z-index:5;justify-content:flex-start!important;padding:22px 20px 20px!important;background:#fff;}#trabajos-left>div:first-child,#trabajos-left>div:last-child{display:none!important;}#trabajos-tabs{flex-direction:column!important;gap:8px!important;}#trabajos-tabs button{font-size:22px!important;}}
     @media (max-width:860px){#hablemos{align-content:flex-start!important;}#contact-left{padding-bottom:20px!important;}#contact-right{min-height:360px!important;padding-top:0!important;padding-bottom:0!important;flex-basis:100%!important;}#home-about{bottom:58px!important;}}
     @media (hover:none) and (pointer:coarse){#lb-prev,#lb-next{display:none!important;}}
+    @media (max-width:860px){[data-pgrid]{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;}[data-lbstage]{width:calc(100vw - 24px)!important;}[data-lbvideo]{max-width:calc(100vw - 24px)!important;}}
   </style>
 </helmet>
 
@@ -79,7 +80,7 @@
       <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
         <div id="{{ g.id }}" style="display:flex;flex-direction:column;gap:12px;border-top:{{ g.border }};padding-top:{{ g.padTop }};">
           <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;"><span style="font-family:'Space Mono',monospace;font-weight:400;font-size:14px;">{{ g.name }}<span style="font-size:11px;color:oklch(0.65 0.01 90);margin-left:.5em;">{{ g.yearLabel }}</span></span><span style="font-family:'Space Mono',monospace;font-size:9px;white-space:nowrap;text-transform:uppercase;letter-spacing:.06em;color:oklch(0.5 0.02 240);">{{ g.tag }}</span></div>
-          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;">
+          <div data-pgrid="1" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;">
             <sc-for list="{{ g.imgs }}" as="im" hint-placeholder-count="3">
               <div onclick="{{ im.open }}" style="display:block;">
                 <sc-if value="{{ im.isImg }}" hint-placeholder-val="{{ true }}"><img src="{{ im.src }}" alt="{{ g.title }}" loading="lazy" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block;background:#f0f0f0;"></sc-if>
@@ -95,8 +96,8 @@
   <sc-if value="{{ lbOpen }}" hint-placeholder-val="{{ false }}">
     <div onclick="{{ closeLb }}" onTouchStart="{{ lbTs }}" onTouchEnd="{{ lbTe }}" style="position:fixed;inset:0;z-index:1000;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:24px;">
       <button id="lb-prev" onclick="{{ lbPrev }}" aria-label="anterior" style="position:absolute;left:clamp(6px,2vw,32px);top:50%;transform:translateY(-50%);width:48px;height:48px;background:none;border:none;display:flex;align-items:center;justify-content:center;padding:0;"><svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="#111" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7H2M7 2L2 7l5 5"/></svg></button>
-      <sc-if value="{{ lbIsImg }}" hint-placeholder-val="{{ true }}"><div onclick="{{ stageClick }}" style="background-image:{{ lbBg }};background-size:contain;background-repeat:no-repeat;background-position:center;width:min(calc(100vw - 136px),1400px);height:92svh;"></div></sc-if>
-      <sc-if value="{{ lbIsVideo }}" hint-placeholder-val="{{ false }}"><video src="{{ lbVideoSrc }}" controls autoplay playsinline onclick="{{ stop }}" style="max-width:min(calc(100vw - 136px),1400px);max-height:88svh;display:block;background:#000;"></video></sc-if>
+      <sc-if value="{{ lbIsImg }}" hint-placeholder-val="{{ true }}"><div data-lbstage="1" onclick="{{ stageClick }}" style="background-image:{{ lbBg }};background-size:contain;background-repeat:no-repeat;background-position:center;width:min(calc(100vw - 136px),1400px);height:92svh;"></div></sc-if>
+      <sc-if value="{{ lbIsVideo }}" hint-placeholder-val="{{ false }}"><video data-lbvideo="1" src="{{ lbVideoSrc }}" controls autoplay playsinline onclick="{{ stop }}" style="max-width:min(calc(100vw - 136px),1400px);max-height:88svh;display:block;background:#000;"></video></sc-if>
       <button id="lb-next" onclick="{{ lbNext }}" aria-label="siguiente" style="position:absolute;right:clamp(6px,2vw,32px);top:50%;transform:translateY(-50%);width:48px;height:48px;background:none;border:none;display:flex;align-items:center;justify-content:center;padding:0;"><svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="#111" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h14M11 2l5 5-5 5"/></svg></button>
     </div>
   </sc-if>
